@@ -1,4 +1,7 @@
 'use strict';
+
+require("harmonize")(["harmony-destructuring"]);
+
 var path = require('path');
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
@@ -29,7 +32,7 @@ gulp.task('pre-test', function () {
     .pipe(istanbul.hookRequire());
 });
 
-gulp.task('test', ['pre-test'], function (cb) {
+gulp.task('test', function (cb) {
   var mochaErr;
 
   gulp.src('test/**/*.js')
@@ -40,6 +43,9 @@ gulp.task('test', ['pre-test'], function (cb) {
     })
     //.pipe(istanbul.writeReports())
     .on('end', function () {
+      if (mochaErr) {
+        console.log(mochaErr.stack);
+      }
       cb(mochaErr);
     });
 });

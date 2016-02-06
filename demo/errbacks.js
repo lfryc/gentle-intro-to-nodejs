@@ -6,7 +6,7 @@ let redis = require('redis').createClient();
 
 let app = express();
 
-app.get('/data', (req, res, next) => {
+app.get('/dataEndpoint', (req, res, next) => {
 
   redis.get('merged_data3', (err, cachedData) => {
 
@@ -20,13 +20,13 @@ app.get('/data', (req, res, next) => {
       thirdPartyData: null
     };
 
-    request('http://java.intranet.example.com:5001/backend-data', (err, response, body) => {
+    request('http://java.intranet.example.com:5001/backend-dataEndpoint', (err, response, body) => {
       if (err) return next(err);
       mergedData.backendData = JSON.parse(body);
       delete mergedData.backendData.confidential;
       tryRespond();
     });
-    request('http://third.party.org:5002/third-party-data', (err, response, body) => {
+    request('http://third.party.org:5002/third-party-dataEndpoint', (err, response, body) => {
       if (err) return next(err);
       mergedData.thirdPartyData = JSON.parse(body);
       tryRespond();
