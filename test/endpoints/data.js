@@ -1,11 +1,11 @@
 'use strict';
 
 var assert = require('assert');
+var dataEndpoint = require('../../lib/endpoints/data.js');
 
 describe('endpoint: /data', function () {
 
   it('should retrieve third-party data', function ( done ) {
-    var dataEndpoint = require('../../lib/endpoints/data.js');
     dataEndpoint.retrieveThirdPartyData()
       .then( (data) => {
         assert.deepEqual(data, {
@@ -17,7 +17,6 @@ describe('endpoint: /data', function () {
   });
 
   it('should retrieve backend data (without confidential information)', function ( done ) {
-    var dataEndpoint = require('../../lib/endpoints/data.js');
     dataEndpoint.retrieveBackendData()
       .then( (data) => {
         assert.deepEqual(data, {
@@ -29,7 +28,6 @@ describe('endpoint: /data', function () {
   });
 
   it('should merge data into single result', function ( done ) {
-    var dataEndpoint = require('../../lib/endpoints/data.js');
     dataEndpoint.retrieveAllData()
       .then( (data) => {
         assert.deepEqual(data, {
@@ -42,7 +40,6 @@ describe('endpoint: /data', function () {
   });
 
   it('data should be cached', function ( done ) {
-    var dataEndpoint = require('../../lib/endpoints/data.js');
     Promise.resolve({ data: 123 })
       .then(dataEndpoint.setCachedValue)
       .then(dataEndpoint.getCachedValue)
@@ -54,7 +51,6 @@ describe('endpoint: /data', function () {
   });
 
   it('data cache should expire after 1 second', function ( done ) {
-    var dataEndpoint = require('../../lib/endpoints/data.js');
     Promise.resolve({ data: 123 })
       .then(dataEndpoint.setCachedValue)
       .then(() => {
